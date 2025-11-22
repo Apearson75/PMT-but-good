@@ -37,23 +37,23 @@ async function download(file, core, i, type) {
     console.log(`${chalk.magenta.bold("IAL Topics Questions")} - ${chalk.green.bold("Successfully Downloaded")}: ${linkName}`);
 }
 
-export async function downloadIALTopics() {
+export async function downloadIALTopics(type: string) {
     console.log(chalk.cyan.bold("Downloading IAL Topic Questions"));
 
     for (let i = 1; i <= limit; i++) {
-        const core = `C${i}`;
+        const core = `${type.toUpperCase()}${i}`;
         const topicNumber = beginning+i;
-        const url = `https://www.physicsandmathstutor.com/a-level-maths-papers/c${i}-by-topic/`;
+        const url = `https://www.physicsandmathstutor.com/a-level-maths-papers/${type}${i}-by-topic/`;
 
         const res = await fetch(url);
         const body = await res.text();
         const $ = cheerio.load(body);
 
-        $(`#post-${topicNumber} > div.post-entry > div.one_half > ul:nth-child(4)`).children().each(async (j, file) => {
+        $(`div.post-entry > div.one_half > ul:nth-child(4)`).children().each(async (j, file) => {
             await download(file, core, i, 1);
         });
 
-        $(`#post-${topicNumber} > div.post-entry > div.one_half > ul:nth-child(7)`).children().each(async (j, file) => {
+        $(`div.post-entry > div.one_half > ul:nth-child(7)`).children().each(async (j, file) => {
             await download(file, core, i, 2);
         });
     }

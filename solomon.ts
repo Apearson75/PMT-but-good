@@ -41,6 +41,9 @@ export async function downloadSolomon() {
             const fileRes = await fetch(link);
 
             await Bun.write(`Maths/Solomon Papers/${topic}/${core}/${linkName}.pdf`, fileRes);
+
+            const path = `Maths/Solomon Papers/${topic}/${core}/${linkName}.pdf`;
+
             console.log(`${chalk.magenta.bold("Solomon Paper")} - ${chalk.green.bold("Successfully Downloaded")}: ${linkName}`);
         })
     }
